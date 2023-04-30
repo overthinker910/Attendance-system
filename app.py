@@ -91,45 +91,6 @@ def identify_face(facearray):
 
 #### A function which trains the model on all the faces available in faces folder
 def train_model():
-    # faces = []
-    # labels = []
-    # userlist = os.listdir('static/faces')
-    # for user in userlist:
-    #     for imgname in os.listdir(f'static/faces/{user}'):
-    #         img = cv2.imread(f'static/faces/{user}/{imgname}')
-    #         resized_face = cv2.resize(img, (50, 50))
-    #         face_points = face_detector.detectMultiScale(resized_face, 1.3, 5)
-
-    #         # Apply image augmentation to capture multiple images of the face
-    #         augmented_faces = []
-    #         for face_point in face_points:
-    #             try:
-    #                 x, y, w, h = face_point
-    #                 face = resized_face[y:y+h, x:x+w]
-    #                 augmented_faces.append(face)
-
-    #                 # Flip the image horizontally
-    #                 flipped_face = cv2.flip(face, 1)
-    #                 augmented_faces.append(flipped_face)
-
-    #                 # Rotate the image
-    #                 (h, w) = face.shape[:2]
-    #                 center = (w // 2, h // 2)
-    #                 angle = 30
-    #                 M = cv2.getRotationMatrix2D(center, angle, 1.0)
-    #                 rotated_face = cv2.warpAffine(face, M, (w, h))
-    #                 augmented_faces.append(rotated_face)
-    #             except:
-    #                 pass
-
-    #         for face in augmented_faces:
-    #             faces.append(face.ravel())
-    #             labels.append(user)
-
-    # faces = np.array(faces)
-    # knn = KNeighborsClassifier(n_neighbors=5)
-    # knn.fit(faces,labels)
-    # joblib.dump(knn,'static/face_recognition_model.pkl')
     faces = []
     labels = []
     userlist = os.listdir('static/faces')
