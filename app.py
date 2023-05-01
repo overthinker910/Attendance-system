@@ -8,6 +8,8 @@ from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 import joblib
 import random
+from reportlab.pdfgen import canvas
+
 
 #### Defining Flask App
 app = Flask(__name__)
@@ -115,13 +117,28 @@ def train_model():
     knn.fit(faces,labels)
     joblib.dump(knn,'static/face_recognition_model.pkl')
 
-def extract_attendance():
+def extract_attendance(datetoday):
     df = pd.read_csv(f'Attendance/Attendance-{datetoday}.csv')
     names = df['Name']
     rolls = df['Roll']
     times = df['Time']
     l = len(df)
-    return names,rolls,times,l
+
+    # Create a PDF report
+    pdf_filename = f'Attendance/Attendance-{datetoday}.pdf'
+    c = canvas.Canvas(pdf_filename)
+    y = 750
+    c.drawString(100, y, 'Attendance Report')
+    y -= 50
+    for i in range(l):
+        c.drawString(100, y, f'Name: {names[i]}')
+        c.drawString(300, y, f'Roll: {rolls[i]}')
+        c.drawString(500, y, f'Time: {times[i]}')
+        y -= 30
+    c.save()
+
+    # Return attendance data
+    return names, rolls, times, l
 
 # Adding Attendance of a specific user
 def add_attendance(name):
