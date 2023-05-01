@@ -114,3 +114,22 @@ def train_model():
     knn = KNeighborsClassifier(n_neighbors=5)
     knn.fit(faces,labels)
     joblib.dump(knn,'static/face_recognition_model.pkl')
+
+def extract_attendance():
+    df = pd.read_csv(f'Attendance/Attendance-{datetoday}.csv')
+    names = df['Name']
+    rolls = df['Roll']
+    times = df['Time']
+    l = len(df)
+    return names,rolls,times,l
+
+# Adding Attendance of a specific user
+def add_attendance(name):
+    username = name.split('_')[0]
+    userid = name.split('_')[1]
+    current_time = datetime.now().strftime("%H:%M:%S")
+    
+    df = pd.read_csv(f'Attendance/Attendance-{datetoday}.csv')
+    if int(userid) not in list(df['Roll']):
+        with open(f'Attendance/Attendance-{datetoday}.csv','a') as f:
+            f.write(f'\n{username},{userid},{current_time}')
